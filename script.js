@@ -42,11 +42,34 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
-const form = document.querySelector(".enquiry-form");
+
+// WHATSAPP ENQUIRY SUBMISSION LOGIC
+const form = document.getElementById("enquiryForm");
 if (form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    alert("Demo wholesale enquiry submitted. Next step: connect Formspree, Web3Forms, or WhatsApp form flow.");
+    
+    // Grab the values from the form inputs
+    const name = document.getElementById("enqName").value.trim();
+    const phone = document.getElementById("enqPhone").value.trim();
+    const message = document.getElementById("enqMessage").value.trim();
+    
+    // Build the WhatsApp text
+    let waText = `*New Wholesale Enquiry*\n\n*Name/Hospital:* ${name}\n*Phone:* ${phone}`;
+    
+    if (message) {
+      waText += `\n\n*Message:* ${message}`;
+    }
+    
+    // Format to a URL ready for the WhatsApp API
+    const waNumber = "918129380702"; 
+    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waText)}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(waUrl, '_blank');
+    
+    // Optionally clear the form
+    form.reset();
   });
 }
 

@@ -67,7 +67,12 @@
           <div class="hero-highlights">
             <article>
               <strong>Address</strong>
-              <span>Ix/271/1 Mission Quarters, Thrissur-680001</span>
+              <span>
+                <!-- Google Maps Link added here -->
+                <a href="https://www.google.com/maps/search/?api=1&query=Joel+Pharma,+Ix%2F271%2F1+Mission+Quarters,+Thrissur-680001" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; color: inherit;">
+                  Ix/271/1 Mission Quarters, Thrissur-680001
+                </a>
+              </span>
             </article>
             <article>
               <strong>Phone</strong>
@@ -268,7 +273,12 @@
         <div class="contact-grid">
           <article class="contact-card reveal">
             <h3>Address</h3>
-            <p>Ix/271/1 Mission Quarters,<br>Thrissur - 680001</p>
+            <p>
+              <!-- Google Maps Link added here -->
+              <a href="https://www.google.com/maps/search/?api=1&query=Joel+Pharma,+Ix%2F271%2F1+Mission+Quarters,+Thrissur-680001" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; color: inherit;">
+                Ix/271/1 Mission Quarters,<br>Thrissur - 680001
+              </a>
+            </p>
           </article>
           <article class="contact-card reveal">
             <h3>Phone & WhatsApp</h3>
@@ -280,21 +290,22 @@
           </article>
         </div>
 
-        <form class="enquiry-form reveal">
+        <!-- IDs added to inputs for JavaScript targeting -->
+        <form class="enquiry-form reveal" id="enquiryForm">
           <div class="form-grid">
             <label>
               <span>Pharmacy / Hospital Name</span>
-              <input type="text" placeholder="Your business name" />
+              <input type="text" id="enqName" placeholder="Your business name" required />
             </label>
             <label>
               <span>Phone</span>
-              <input type="tel" placeholder="Your phone number" />
+              <input type="tel" id="enqPhone" placeholder="Your phone number" required />
             </label>
           </div>
 
           <label>
             <span>Message (Optional)</span>
-            <textarea rows="5" placeholder="Tell us about your bulk requirement..."></textarea>
+            <textarea id="enqMessage" rows="5" placeholder="Tell us about your bulk requirement..."></textarea>
           </label>
 
           <button type="submit" class="btn btn-primary">Submit enquiry</button>
