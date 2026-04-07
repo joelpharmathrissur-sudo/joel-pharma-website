@@ -50,7 +50,6 @@
   --teal: #159f9b;
   --teal-deep: #117f7c;
   --accent: linear-gradient(135deg, #61ba35 0%, #15a5a0 100%);
-  --dark-band: #163033;
 }
 
 [data-theme="dark"] {
@@ -70,7 +69,6 @@
   --teal: #23b8b0;
   --teal-deep: #14988f;
   --accent: linear-gradient(135deg, #72d042 0%, #23b8b0 100%);
-  --dark-band: #081012;
 
   --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.24);
   --shadow-md: 0 24px 60px rgba(0, 0, 0, 0.34);
@@ -165,21 +163,6 @@ textarea:focus {
   border-radius: var(--radius-full);
   background: var(--teal);
   color: white;
-}
-
-.topbar {
-  background: var(--dark-band);
-  color: rgba(255,255,255,0.86);
-  font-size: var(--text-sm);
-}
-
-.topbar-inner {
-  min-height: 46px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .site-header {
@@ -578,12 +561,18 @@ textarea:focus {
 
 .slider-track-wrap {
   overflow: hidden;
+  /* Add cursor styles to indicate it's swipeable */
+  cursor: grab;
+}
+.slider-track-wrap:active {
+  cursor: grabbing;
 }
 
 .slider-track {
   display: grid;
   grid-template-columns: repeat(3, 100%);
   transition: transform 400ms ease;
+  will-change: transform;
 }
 
 .slide-card {
@@ -596,6 +585,8 @@ textarea:focus {
   border-radius: 28px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
+  /* Prevent images from being dragged by default browser behavior */
+  user-select: none;
 }
 
 .slide-card img {
@@ -603,6 +594,7 @@ textarea:focus {
   height: 100%;
   min-height: 360px;
   object-fit: cover;
+  pointer-events: none;
 }
 
 .slide-copy {
@@ -803,10 +795,30 @@ textarea:focus {
 }
 
 @media (max-width: 720px) {
-  .topbar-inner {
-    justify-content: center;
-    text-align: center;
-    padding: 0.7rem 0;
+  /* Shrink Header & Header Button on Mobile to Avoid Cramping */
+  .nav-shell {
+    min-height: 70px;
+    gap: 0.5rem;
+  }
+  .brand-logo {
+    width: 44px;
+    height: 44px;
+  }
+  .brand-copy strong {
+    font-size: 1rem;
+  }
+  .nav-actions {
+    gap: 0.5rem;
+  }
+  .nav-actions .btn-primary {
+    min-height: 38px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8rem;
+  }
+  .theme-toggle,
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
   }
 
   .nav-actions .btn-outline {

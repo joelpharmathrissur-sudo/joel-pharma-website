@@ -50,32 +50,82 @@ if (form) {
   });
 }
 
+// SLIDER WITH SWIPE FUNCTIONALITY
+const trackWrap = document.querySelector(".slider-track-wrap");
 const track = document.getElementById("sliderTrack");
 const prev = document.getElementById("prevSlide");
 const next = document.getElementById("nextSlide");
 
-if (track && prev && next) {
+if (trackWrap && track && prev && next) {
   let index = 0;
   const totalSlides = track.children.length;
+  let autoPlay = setInterval(autoSlide, 4500);
+
+  function autoSlide() {
+    if (window.innerWidth > 720) {
+      index = (index + 1) % totalSlides;
+      updateSlider();
+    }
+  }
 
   function updateSlider() {
     track.style.transform = `translateX(-${index * 100}%)`;
   }
 
+  function resetAutoPlay() {
+    clearInterval(autoPlay);
+    autoPlay = setInterval(autoSlide, 4500);
+  }
+
   next.addEventListener("click", () => {
     index = (index + 1) % totalSlides;
     updateSlider();
+    resetAutoPlay();
   });
 
   prev.addEventListener("click", () => {
     index = (index - 1 + totalSlides) % totalSlides;
     updateSlider();
+    resetAutoPlay();
   });
 
-  setInterval(() => {
-    if (window.innerWidth > 720) {
-      index = (index + 1) % totalSlides;
-      updateSlider();
+  // Touch and Swipe Variables
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+
+  trackWrap.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    currentX = startX;
+    isDragging = true;
+    track.style.transition = 'none'; // Snap instantly during drag
+    clearInterval(autoPlay); // Pause auto-scroll during swipe
+  }, { passive: true });
+
+  trackWrap.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+    const diff = currentX - startX;
+    const movePercent = (diff / trackWrap.clientWidth) * 100;
+    track.style.transform = `translateX(calc(-${index * 100}% + ${movePercent}%))`;
+  }, { passive: true });
+
+  trackWrap.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.transition = 'transform 400ms ease'; // Re-enable smooth transition
+    
+    const diff = currentX - startX;
+    
+    // If swiped more than 50px, change slide
+    if (Math.abs(diff) > 50) {
+      if (diff < 0) {
+        index = (index + 1) % totalSlides; // Swipe left (next)
+      } else {
+        index = (index - 1 + totalSlides) % totalSlides; // Swipe right (prev)
+      }
     }
-  }, 4500);
+    updateSlider();
+    resetAutoPlay();
+  });
 }
