@@ -46,7 +46,7 @@ const form = document.querySelector(".enquiry-form");
 if (form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    alert("Demo enquiry form submitted. Next step: connect Formspree or Web3Forms.");
+    alert("Demo wholesale enquiry submitted. Next step: connect Formspree, Web3Forms, or WhatsApp form flow.");
   });
 }
 
